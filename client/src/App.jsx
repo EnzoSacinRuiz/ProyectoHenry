@@ -57,7 +57,7 @@ function App() {
 
   function searchHandler(id) {
     axios(
-      `https://rym2-production.up.railway.app/api/character/${id}?key=henrym-hx-gcamey`
+      `http://localhost:3000/rickandmorty/character/${id}`
     ).then(({data}) => {
       if (data.name) {
         setCharacters((oldChars) => [...oldChars, data]);
