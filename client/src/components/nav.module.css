@@ -1,0 +1,8 @@
+.navContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25px;
+  justify-content: space-between;
+  border: 1px solid black;
+  padding: 5px 10px;
+}

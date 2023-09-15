@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {addFavorite, removeFavorite} from "../redux/actions/actions";
 import {useState, useEffect} from "react";
 
+import style from "./card.module.css";
+
 function Card(props) {
   const navigate = useNavigate();
   // const location = useLocation()
@@ -40,46 +42,48 @@ function Card(props) {
   }
 
   return (
-    <div>
-      {/* {location.pathname !== "/favorites" && <button
-          onClick={() => {
-            onClose(character.id);
-          }}
-        >
-          X
-        </button>} */}
+    <div className={style.cardContainer}>
+      <div className={style.imageContainer}>
+        <img
+          className={style.characterImage}
+          src={character.image}
+          alt={name}
+          onClick={navigateHandler}
+        />
+        <h2 className={style.name}>Name: {character.name}</h2>
 
-      {closeBtn && (
-        <button
-          onClick={() => {
-            onClose(character.id);
-          }}
-        >
-          X
-        </button>
-      )}
+        {isFav ? (
+          <button
+            onClick={() => {
+              handleFavorite(character.id);
+            }}
+          >
+            ❤️
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              handleFavorite(character);
+            }}
+          >
+            🤍
+          </button>
+        )}
+        <div className={style.closeBtn}>
+          {closeBtn && (
+            <button
+              onClick={() => {
+                onClose(character.id);
+              }}
+            >
+              X
+            </button>
+          )}
+        </div>
 
-      <h2>Name: {character.name}</h2>
-      {isFav ? (
-        <button
-          onClick={() => {
-            handleFavorite(character.id);
-          }}
-        >
-          ❤️
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            handleFavorite(character);
-          }}
-        >
-          🤍
-        </button>
-      )}
-      <h2>Species: {character.species}</h2>
-      <h2>Gender: {character.gender}</h2>
-      <img src={character.image} alt={name} onClick={navigateHandler} />
+        <h2>Species: {character.species}</h2>
+        <h2>Gender: {character.gender}</h2>
+      </div>
     </div>
   );
 }

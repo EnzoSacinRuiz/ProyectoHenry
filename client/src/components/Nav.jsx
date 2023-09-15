@@ -1,9 +1,11 @@
 import SearchBar from "./SearchBar";
 import {Link} from "react-router-dom";
 
+import style from "./nav.module.css";
+
 function Nav({onSearch, randomize}) {
   return (
-    <div>
+    <div className={style.navContainer}>
       <div>
         <Link to="/about">About</Link>
         <Link to="/home">Home</Link>

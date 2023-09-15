@@ -12,34 +12,23 @@ import About from "./views/About.jsx";
 
 import "./App.css";
 
-// const example = [
-//   {
-//     id: 1,
-//     name: "Rick Sanchez",
-//     status: "Alive",
-//     species: "Human",
-//     gender: "Male",
-//     origin: {
-//       name: "Earth (C-137)",
-//       url: "https://rickandmortyapi.com/api/location/1",
-//     },
-//     image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-//   },
-// ];
-
 function App() {
   const location = useLocation();
   const [characters, setCharacters] = useState([]);
   const navigate = useNavigate();
 
   const [access, setAccess] = useState(true);
-  const EMAIL = "enzo@gmail.com";
-  const PASSWORD = "asdfgh12";
 
-  function loginHandler(userData) {
-    if (userData.password === PASSWORD && userData.email === EMAIL) {
-      setAccess(true);
-      navigate("/home");
+  async function loginHandler(userData) {
+    try {
+      const {email, password} = userData;
+      const URL = "http://localhost:3001/rickandmorty/login/";
+      const {data} = await axios(URL + `?email=${email}&password=${password}`);
+      const {access} = data; //true / false
+      setAccess(access);
+      access && navigate("/home");
+    } catch (error) {
+      alert(error);
     }
   }
 
@@ -55,16 +44,21 @@ function App() {
   // nueva API
   //*https://rym2-production.up.railway.app/api/character/${id}?key=henrym-usuariodegithub
 
-  function searchHandler(id) {
-    axios(
-      `http://localhost:3000/rickandmorty/character/${id}`
-    ).then(({data}) => {
+  async function searchHandler(id) {
+    try {
+      const {data} = await axios(
+        `http://localhost:3001/rickandmorty/character/${id}`
+      );
+
       if (data.name) {
         setCharacters((oldChars) => [...oldChars, data]);
       } else {
-        window.alert("¡No hay personajes con este ID!");
+        throw new Error("¡No hay personajes con este ID!");
       }
-    });
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+    }
   }
 
   function closeHandler(id) {

@@ -8,13 +8,15 @@ function Detail() {
   const {id} = useParams();
 
   useEffect(() => {
-    axios(`http://localhost:3000/rickandmorty/character/${id}`).then(({data}) => {
-      if (data.name) {
-        setCharacter(data);
-      } else {
-        window.alert("No hay personajes con ese ID");
+    axios(`http://localhost:3001/rickandmorty/character/${id}`).then(
+      ({data}) => {
+        if (data.name) {
+          setCharacter(data);
+        } else {
+          window.alert("No hay personajes con ese ID");
+        }
       }
-    });
+    );
     return setCharacter({});
     //eslint-disable-next-line
   }, []);
@@ -40,11 +42,11 @@ function Detail() {
         </div>
         <div>
           <h3>Origin:</h3>
-          <p>{character.origin?.name}</p>
+          <p>{character.origin}</p>
         </div>
         <div>
           <h3>Location:</h3>
-          <p>{character.location?.name}</p>
+          <p>{character.location}</p>
         </div>
       </div>
     </div>
